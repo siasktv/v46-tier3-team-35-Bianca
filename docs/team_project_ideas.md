@@ -10,9 +10,9 @@ sentences.
 Each team member should Place an 'X' under their name to vote for the ideas 
 you like the best.
 
-| Project Idea | Description | teammate name | teammate name | keldim | Yi | teammate name | teammate name |
+| Project Idea | Description | teammate name | Jamal | keldim | Yi | teammate name | teammate name |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| First idea | Description | | | Restaurant Finder: finds a list of restaurants based on food type, how busy the restaurant is, your current location... | I can do Restaurant Finder or Cypto app Bianca mentioned | | |
+| First idea | Description | | Social Media clone app or Restaurant Finder app that Keldim mentioned  | Restaurant Finder: finds a list of restaurants based on food type, how busy the restaurant is, your current location... | I can do Restaurant Finder or Cypto app Bianca mentioned | | |
 | Second idea | Description | | | | | | |
 | ... | Description | | | | | | |
 | Last idea | Description | | | | | | |
