@@ -12,7 +12,7 @@ you like the best.
 
 | Project Idea | Description | teammate name | Jamal | keldim | Yi | teammate name | teammate name |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| First idea | Description | | Social Media clone app or Restaurant Finder app that Keldim mentioned  | Restaurant Finder: finds a list of restaurants based on food type, how busy the restaurant is, your current location... | I can do Restaurant Finder or Cypto app Bianca mentioned | | |
+| First idea | Description | | Social Media clone app or Restaurant Finder app that Keldim mentioned  | Restaurant Finder: finds a list of restaurants based on food type, how busy the restaurant is, your current location... | I don't have a particular idea. I'm trying to improve my overall teamwork and coding skills, and I'm open to any suggestions.| | |
 | Second idea | Description | | | | | | |
 | ... | Description | | | | | | |
 | Last idea | Description | | | | | | |
