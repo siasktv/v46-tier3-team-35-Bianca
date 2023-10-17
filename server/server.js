@@ -1,6 +1,8 @@
+require('dotenv').config()
 const express = require('express')
+const connectToDB = require('./config/database')
 
-const app = express();
+const app = express()
 
 // test route
 app.get('/', function(req, res) {
@@ -11,6 +13,7 @@ app.get('/', function(req, res) {
 const PORT = 3000
 
 app.listen(PORT, () => {
-    console.log(`Server is running at port ${PORT}...`);
+    console.log(`Server is running at port ${PORT}...`)
+    connectToDB()
 })
 
