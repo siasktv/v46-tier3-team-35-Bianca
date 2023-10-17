@@ -1,19 +1,20 @@
-require('dotenv').config()
-const express = require('express')
-const connectToDB = require('./config/database')
+require("dotenv").config();
+const express = require("express");
+const connectToDB = require("./config/database");
 
-const app = express()
+const app = express();
 
 // test route
-app.get('/', function(req, res) {
-    res.send('<h1>Hello, world!</h1>')
-})
+app.get("/", function (req, res) {
+  res.send("<h1>Hello, world!</h1>");
+});
+
+app.use("/users", require("./routes/userRoutes.js"));
 
 // listen at the designated port
-const PORT = 3000
+const PORT = 3000;
 
 app.listen(PORT, () => {
-    console.log(`Server is running at port ${PORT}...`)
-    connectToDB()
-})
-
+  console.log(`Server is running at port ${PORT}...`);
+  connectToDB();
+});
