@@ -2,15 +2,21 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { Home } from "./Home";
 import { Profile } from "./Profile";
 import { Nav } from "./Nav";
+import { Auth } from "./Auth/Auth";
 
 function App() {
+  const authConst = Auth;
+
   return (
     <BrowserRouter>
       <Nav />
       <div className="body">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
+          {/* <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} /> */}
+          {/* authConst(history) */}
+          <Route path="/" element={<Home auth={authConst} />} />
+          <Route path="/profile" element={<Profile auth={authConst} />} />
         </Routes>
       </div>
     </BrowserRouter>
