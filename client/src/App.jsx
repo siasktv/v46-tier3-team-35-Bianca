@@ -10,7 +10,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Nav />
+      <Nav auth={authConst} />
       <div className="body">
         <Routes>
           <Route path="/" element={<Home auth={authConst} />} />

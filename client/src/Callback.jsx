@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export const Callback = (props) => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (/access_token|id_token|error/.test(props.loc.hash)) {
       props.auth.handleAuthentication();
     } else {

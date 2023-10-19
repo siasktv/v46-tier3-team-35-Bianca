@@ -39,9 +39,26 @@ const handleAuthentication = () => {
   });
 };
 
+const isAuthenticated = () => {
+  const expiresAt = JSON.parse(localStorage.getItem("expires_at"));
+  return new Date().getTime() < expiresAt;
+};
+
+const logout = () => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("id_token");
+  localStorage.removeItem("expires_at");
+  auth0Const.logout({
+    clientID: import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID,
+    returnTo: "http://localhost:5173",
+  });
+};
+
 export const Auth = {
   auth0Const: auth0Const,
   login: login,
   handleAuthentication: handleAuthentication,
   setSession: setSession,
+  isAuthenticated: isAuthenticated,
+  logout: logout,
 };
