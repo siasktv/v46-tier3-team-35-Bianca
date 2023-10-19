@@ -28,12 +28,8 @@ const handleAuthentication = () => {
   auth0Const.parseHash((err, authResult) => {
     if (authResult && authResult.accessToken && authResult.idToken) {
       setSession(authResult);
-      //   window.history.pushState({}, "Home", "/");
-      //   window.location.reload();
     } else if (err) {
-      //   window.history.pushState({}, "Home", "/");
-      //   window.location.reload();
-      //   alert(`Error: ${err.error}. Check the console for further details.`);
+      alert(`Error: ${err.error}. Check the console for further details.`);
       console.log(err);
     }
   });
