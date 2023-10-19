@@ -33,7 +33,7 @@ const handleAuthentication = () => {
     } else if (err) {
       //   window.history.pushState({}, "Home", "/");
       //   window.location.reload();
-      alert(`Error: ${err.error}. Check the console for further details.`);
+      //   alert(`Error: ${err.error}. Check the console for further details.`);
       console.log(err);
     }
   });
@@ -48,9 +48,28 @@ const logout = () => {
   localStorage.removeItem("access_token");
   localStorage.removeItem("id_token");
   localStorage.removeItem("expires_at");
+  userProfile = null;
   auth0Const.logout({
     clientID: import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID,
     returnTo: "http://localhost:5173",
+  });
+};
+
+let userProfile = null;
+
+const getAccessToken = () => {
+  const accessToken = localStorage.getItem("access_token");
+  if (!accessToken) {
+    throw new Error("No access token found.");
+  }
+  return accessToken;
+};
+
+const getProfile = (cb) => {
+  if (userProfile) return cb(userProfile);
+  auth0Const.client.userInfo(getAccessToken(), (err, profile) => {
+    if (profile) userProfile = profile;
+    cb(profile, err);
   });
 };
 
@@ -61,4 +80,7 @@ export const Auth = {
   setSession: setSession,
   isAuthenticated: isAuthenticated,
   logout: logout,
+  userProfile: userProfile,
+  getAccessToken: getAccessToken,
+  getProfile: getProfile,
 };

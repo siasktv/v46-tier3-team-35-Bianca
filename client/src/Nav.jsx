@@ -8,9 +8,11 @@ export const Nav = ({ auth }) => {
         <li>
           <Link to="/">Home</Link>
         </li>
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
+        {isAuthenticated() && (
+          <li>
+            <Link to="/profile">Profile</Link>
+          </li>
+        )}
         <li>
           <button onClick={isAuthenticated() ? logout : login}>
             {isAuthenticated() ? "Log Out" : "Log In"}

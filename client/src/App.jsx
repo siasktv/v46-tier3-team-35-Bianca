@@ -18,7 +18,16 @@ function App() {
             path="/callback"
             element={<Callback auth={authConst} loc={location} />}
           />
-          <Route path="/profile" element={<Profile auth={authConst} />} />
+          <Route
+            path="/profile"
+            element={
+              authConst.isAuthenticated() ? (
+                <Profile auth={authConst} />
+              ) : (
+                <Home auth={authConst} />
+              )
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
