@@ -2,6 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { createCryptoData } = require("../controllers/cryptoController");
 
-router.get("/create", createCryptoData);
+router.post("/create", createCryptoData);
 
 module.exports = router;
