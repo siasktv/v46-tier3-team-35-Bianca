@@ -8,8 +8,6 @@ export const Callback = (props) => {
     if (/access_token|id_token|error/.test(props.loc.hash)) {
       props.auth.handleAuthentication();
       navigate("/");
-    } else {
-      throw new Error("Invalid callback URL.");
     }
   }, []);
 
