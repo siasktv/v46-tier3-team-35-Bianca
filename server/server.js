@@ -30,6 +30,7 @@ app.get("/", function (req, res) {
 app.use("/users", require("./routes/userRoutes.js"));
 app.use("/crypto", require("./routes/cryptoRoutes"));
 
+
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}...`);
   connectToDB();
