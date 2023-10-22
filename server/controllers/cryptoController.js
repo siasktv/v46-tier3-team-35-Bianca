@@ -21,7 +21,30 @@ const createCryptoData = async (req, res) => {
     }
 }
 
+const getCryptoData = async (req, res) => {
+    try{
+        const data = await Crypto.find();
+        res.status(200).json(data)
+    }catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "An error occurred while saving fetching crypto data."});
+    }
+}
+
+const getCryptoDataById = async (req, res) => {
+    try{
+        const { id } = req
+        const data = Crypto.findById(id);
+        res.status(200).json(data)
+    }catch (error) {
+        console.log(error);
+        res.status(500).send({message: "An error occurred while saving fetching crypto data." })
+    }
+}
+
 module.exports = {
-    createCryptoData
+    createCryptoData,
+    getCryptoData,
+    getCryptoDataById
   };
   
