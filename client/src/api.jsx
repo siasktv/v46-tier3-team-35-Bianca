@@ -1,21 +1,15 @@
 import { useEffect } from "react";
-import Axios from "axios";
 function ApiFetch() {
   useEffect(() => {
-    Axios
-      .get(
-        "https://api.coingecko.com/api/v3/search/trending"
-      )
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  }, []);
+        fetch('https://api.coingecko.com/api/v3/search/trending')
+        .then(response => response.json())
+        .then(data => console.log(data.coins))
+        .catch(error => console.error(error));
+    },[])
   
 
   return <div></div>;
 }
 
 export default ApiFetch;
+
