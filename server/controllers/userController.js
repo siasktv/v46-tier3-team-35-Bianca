@@ -17,6 +17,17 @@ const createUser = async (req, res) => {
   }
 }
 
+// get user by id
+const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).exec();
+    console.log(user);
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+}
+
 module.exports = {
-  test, createUser
+  test, createUser, getUserById
 };
