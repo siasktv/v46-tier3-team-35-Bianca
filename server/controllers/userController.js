@@ -1,10 +1,5 @@
 const User = require("../models/user");
 
-// test route
-const test = (req, res) => {
-  res.status(200).json({ message: "test successfully." });
-};
-
 // create user
 const createUser = async (req, res) => {
   console.log('[From POST handler]', req.body)
@@ -28,6 +23,21 @@ const getUserById = async (req, res) => {
   }
 }
 
+// update user
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.userId, req.body, {new: true});
+    console.log(user);
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error)
+    res.status(500).send("Server Error");
+  }
+}
+
 module.exports = {
-  test, createUser, getUserById
+  createUser, getUserById, updateUser
 };
