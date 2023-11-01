@@ -48,11 +48,11 @@ function NavBar({ auth, setSearch }) {
                 <Link to="/profile">Profile</Link>
               </li>
             )}
-            <li>
-              <button onClick={isAuthenticated() && logout}>
-                {isAuthenticated() && "Log Out"}
+            {isAuthenticated() && <li>
+              <button onClick={logout}>
+                {"Log Out"}
               </button>
-            </li>
+            </li>}
             {auth.isAuthenticated() ? (
               <Link to="/profile">View profile</Link>
             ) : (
