@@ -4,6 +4,7 @@ import { Profile } from "./Profile";
 import { Nav } from "./Nav";
 import { Auth } from "./Auth/Auth";
 import { Callback } from "./Callback";
+import Footer from "./Footer";
 
 function App() {
   const authConst = Auth;
@@ -30,6 +31,7 @@ function App() {
           />
         </Routes>
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }
