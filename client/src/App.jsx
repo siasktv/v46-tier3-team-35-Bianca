@@ -7,6 +7,8 @@ import Dashboard from "./Components/Routes/dashboard";
 import DashboardNav from "./Components/dashBoardNav";
 import NavBar from "./Components/Navbar";
 import { useState } from "react";
+import Footer from "./Footer";
+
 function App() {
   const authConst = Auth;
   const [search, setSearch] = useState('')
@@ -38,6 +40,7 @@ function App() {
           />
         </Routes>
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }
