@@ -15,7 +15,7 @@ function CategoriesList() {
     <div className="overflow-x-auto">
       <table className="table" style={{ width: "1400px" }}>
         <thead>
-          <tr>
+            <tr key={crypto.id}>
             <th>Name</th>
             <th>Market Cap</th>
             <th>Top Gainer</th>
