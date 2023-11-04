@@ -22,7 +22,7 @@ function TopCryptos() {
         <tbody>
           {topCryptos.map((crypto) => {
             return (
-              <tr>
+             <tr key={crypto.id}>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
