@@ -16,7 +16,7 @@ function CryptoList() {
     <div className="overflow-x-auto">
       <table className="table" style={{ width: "1400px" }}>
         <thead>
-          <tr>
+          <tr key={crypto.id}>
             <th>Name</th>
             <th>Price</th>
             <th>Cap</th>
