@@ -16,7 +16,7 @@ function CryptoList() {
     <div className="overflow-x-auto">
       <table className="table" style={{ width: "1400px" }}>
         <thead>
-          <tr key={crypto.id}>
+          <tr>
             <th>Name</th>
             <th>Price</th>
             <th>Cap</th>
@@ -26,7 +26,7 @@ function CryptoList() {
         <tbody>
           {cryptos.map((crypto) => {
             return (
-              <tr>
+              <tr key={crypto.id}>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
@@ -44,12 +44,20 @@ function CryptoList() {
                   </div>
                 </td>
                 <td>
-                {crypto.current_price ? crypto.current_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","): 'undefined'}
+                  {crypto.current_price
+                    ? crypto.current_price
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    : "undefined"}
                   <br />
                   {/* <span className="badge badge-ghost badge-sm">Desktop Support Technician</span> */}
                 </td>
                 <td>
-                {crypto.market_cap ? crypto.market_cap.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","): 'undefined'}
+                  {crypto.market_cap
+                    ? crypto.market_cap
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    : "undefined"}
                   <br />
                   {/* <span className="badge badge-ghost badge-sm">Desktop Support Technician</span> */}
                 </td>
