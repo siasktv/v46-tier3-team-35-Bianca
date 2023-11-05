@@ -15,7 +15,7 @@ function CategoriesList() {
     <div className="overflow-x-auto">
       <table className="table" style={{ width: "1400px" }}>
         <thead>
-            <tr key={crypto.id}>
+          <tr>
             <th>Name</th>
             <th>Market Cap</th>
             <th>Top Gainer</th>
@@ -27,7 +27,7 @@ function CategoriesList() {
         <tbody>
           {categories.map((crypto) => {
             return (
-              <tr>
+              <tr key={crypto.id}>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div>
