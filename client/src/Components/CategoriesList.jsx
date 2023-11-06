@@ -52,7 +52,6 @@ function CategoriesList() {
                 <td>
                   ${crypto.volume_24h ? crypto.volume_24h : 'undefined'}
                   <br />
-                  {/* <span className="badge badge-ghost badge-sm">Desktop Support Technician</span> */}
                 </td>
                 <td>
                   {" "}
@@ -107,15 +106,6 @@ function CategoriesList() {
             );
           })}
         </tbody>
-        {/* foot */}
-        <tfoot>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Rank</th>
-            <th></th>
-          </tr>
-        </tfoot>
       </table>
     </div>
   );
