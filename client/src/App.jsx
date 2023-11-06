@@ -1,5 +1,5 @@
 import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
-import { Home } from "./Components/Routes/Home";
+import { Home } from "./Home";
 import { Profile } from "./Profile";
 import { Auth } from "./Auth/Auth";
 import { Callback } from "./Callback";
@@ -11,7 +11,7 @@ import Footer from "./Footer";
 
 function App() {
   const authConst = Auth;
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("");
   return (
     <BrowserRouter>
       <NavBar auth={authConst} setSearch={setSearch} />
@@ -32,12 +32,7 @@ function App() {
               )
             }
           />
-           <Route
-            path="/dashboard"
-            element={
-            <DashboardNav search={search}/>
-            }
-          />
+          <Route path="/dashboard" element={<DashboardNav search={search} />} />
         </Routes>
       </div>
       <Footer />
