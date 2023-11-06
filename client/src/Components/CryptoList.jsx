@@ -10,7 +10,6 @@ function CryptoList() {
       .then((data) => setCryptos(data))
       .catch((error) => console.error(error));
   }, []);
-  console.log(cryptos);
 
   return (
     <div className="overflow-x-auto">
@@ -24,9 +23,9 @@ function CryptoList() {
           </tr>
         </thead>
         <tbody>
-          {cryptos.map((crypto) => {
+          {cryptos.map((crypto, index) => {
             return (
-              <tr key={crypto.id}>
+              <tr key={index}>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">

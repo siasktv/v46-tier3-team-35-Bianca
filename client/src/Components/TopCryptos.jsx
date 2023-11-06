@@ -8,21 +8,21 @@ function TopCryptos() {
       .then((data) => setTopCryptos(data.coins))
       .catch((error) => console.error(error));
   }, []);
-  console.log(topCryptos);
+
   return (
     <div className="overflow-x-auto">
       <table className="table" style={{ width: "1400px" }}>
         <thead>
-          <tr key={crypto.id}>
+          <tr>
             <th>Name</th>
             <th>Price</th>
             <th>Rank</th>
           </tr>
         </thead>
         <tbody>
-          {topCryptos.map((crypto) => {
+          {topCryptos.map((crypto, index) => {
             return (
-             <tr key={crypto.id}>
+              <tr key={index}>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">

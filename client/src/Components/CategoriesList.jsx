@@ -9,8 +9,6 @@ function CategoriesList() {
       .then((data) => setCategories(data))
       .catch((error) => console.error(error));
   }, []);
-  console.log(categories);
-
   return (
     <div className="overflow-x-auto">
       <table className="table" style={{ width: "1400px" }}>
@@ -25,9 +23,9 @@ function CategoriesList() {
           </tr>
         </thead>
         <tbody>
-          {categories.map((crypto) => {
+          {categories.map((crypto, index) => {
             return (
-              <tr key={crypto.id}>
+              <tr key={index}>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div>

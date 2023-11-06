@@ -43,16 +43,16 @@ function NavBar({ auth, setSearch }) {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
-            {isAuthenticated() && (
+            {isAuthenticated() ? (
               <li>
                 <Link to="/profile">Profile</Link>
               </li>
-            )}
-            {isAuthenticated() && <li>
+            ) : ""}
+            {isAuthenticated() ? <li>
               <button onClick={logout}>
                 {"Log Out"}
               </button>
-            </li>}
+            </li> : ""}
             {auth.isAuthenticated() ? (
               <Link to="/profile">View profile</Link>
             ) : (

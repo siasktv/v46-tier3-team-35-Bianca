@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
+import ImageNotFound from "../Search/istockphoto-1409329028-612x612.jpg";
 
 function SearchPageNews(props) {
-  const cryptoInfo = props.cryptoInfo;
+  const [searchName, setSearchName] = useState("");
   const [cryptoNews, setCryptoNews] = useState([]);
-  console.log(cryptoInfo);
-
+  const cryptoName = props.cryptoInfoName;
+  useEffect(() => {
+    setSearchName(cryptoName);
+  }, [cryptoName]);
   useEffect(() => {
     fetch(
-      `https://bing-news-search1.p.rapidapi.com/news/search?q=Bitcoin&freshness=Day&textFormat=Raw&safeSearch=Off`,
+      `https://bing-news-search1.p.rapidapi.com/news/search?q=${cryptoName}&freshness=Day&textFormat=Raw&safeSearch=Off`,
       {
         method: "GET",
         headers: {
@@ -25,10 +28,7 @@ function SearchPageNews(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-
-  console.log(cryptoNews);
-
+  }, [cryptoName]);
   return (
     <div>
       <div
@@ -45,18 +45,33 @@ function SearchPageNews(props) {
       >
         <h2 className="News-title">News</h2>
         <p className="Trending">Trending</p>
-        {cryptoNews.length > 0 &&
-          cryptoNews.map((news) => {
-            return (
-              <div>
-              <a href={news.url}><div className="News-div">
-                <img src={news.image.thumbnail.contentUrl} className="News-image" />
-                <span className="news-name">{news.name}</span>
-              </div></a>
-              {/* <p className="news-provider">{news.provider[0].name}</p> */}
-              </div>
-            );
-          })}
+        {cryptoNews.length > 0
+          ? cryptoNews.map((news) => {
+              return (
+                <div key={news.name}>
+                  <a href={news.url ? news.url : ""}>
+                    <div className="News-div">
+                      {news.image ? (
+                        <img
+                          src={news.image.thumbnail.contentUrl}
+                          className="News-image"
+                        />
+                      ) : (
+                        <img
+                          src={<ImageNotFound />}
+                          className="image-not-found"
+                        />
+                      )}
+                      <span className="news-name">
+                        {news.name && news.name}
+                      </span>
+                    </div>
+                  </a>
+                  {/* <p className="news-provider">{news.provider[0].name}</p> */}
+                </div>
+              );
+            })
+          : ""}
       </div>
     </div>
   );

@@ -35,7 +35,6 @@ const HistoryChart = (props) => {
       .catch((error) => console.error(error));
   }, [id]);
 
-console.log(id)
   const coinChartData = cryptoHistory ? cryptoHistory.map(value => ({ x: value[0], y: value[1].toFixed(2) })): [];
   
   const options = {

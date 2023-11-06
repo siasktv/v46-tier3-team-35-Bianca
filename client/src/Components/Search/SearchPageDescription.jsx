@@ -21,17 +21,17 @@ function Description(props) {
       >
         
         <h2 className="Description-Header">
-          What is {cryptoInfo.length === undefined && cryptoInfo.name}?
+        {cryptoInfo.length === undefined ? cryptoInfo.description.en.length > 0 ? <><span>What is</span> <span>{cryptoInfo.name}</span>?</>: "" : ""}
         </h2>
-        {cryptoInfo.length === undefined &&
+        {cryptoInfo.length === undefined ?
         <div>
-          {cryptoInfo.length === undefined &&
+          {cryptoInfo.length === undefined ?
             cryptoInfo.description.en.slice(
               0,
               readMore ? cryptoInfo.description.en.length : 600
-            )}
-          <p onClick={handleClick}>{readMore && cryptoInfo.description.en.length > 600 ? "Read Less" : cryptoInfo.description.en.length > 600 ? "Read More" : ''}</p>
-        </div>}
+            ) : ""}
+          <p onClick={handleClick}>{readMore ?  cryptoInfo.description.en.length > 600 ? "Read Less" : cryptoInfo.description.en.length > 600 ? "Read More" : '' : ""}</p>
+        </div> : ""}
       </div>
     </div>
   );

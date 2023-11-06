@@ -164,6 +164,19 @@ body {
 .News-image {
   margin-top: 1px;
 }
+.image-not-found{
+  margin-top: 1px;
+  width: 200px;
+}
+.Trade-div button{
+   border-radius: 10px;
+  margin-left: 70px;
+  position: absolute;
+  top: 260px;
+  height: 70px;
+  width: 250px;
+  background-color: aliceblue;
+}
 /* .news-provider {
   position: relative;
   margin-top: -20px;

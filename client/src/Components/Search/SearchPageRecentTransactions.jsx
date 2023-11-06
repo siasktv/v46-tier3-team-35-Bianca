@@ -8,6 +8,7 @@ function RecentTransactions(props) {
 useEffect(() => {
 setCryptoInfo(cryptoList)
 },[cryptoList])
+
   return (
     <div>
       <div
@@ -22,8 +23,8 @@ setCryptoInfo(cryptoList)
           overflowY: "auto",
         }}
       >
-        {cryptoInfo.length === undefined && cryptoInfo.tickers.map((crypto) => {
-        return <div>
+        {cryptoInfo.length === undefined ? cryptoInfo.tickers.map((crypto, index) => {
+        return <div key={index}>
           <a href={crypto.trade_url}>
         <div style={{display:"flex", paddingTop:35}}>
           <img src={cryptoInfo.image.thumb} className="Recent-logo"/>
@@ -35,7 +36,7 @@ setCryptoInfo(cryptoList)
       <span className="Recent-percentage">{crypto.bid_ask_spread_percentage}</span>
       </a>
       </div> 
-         })}
+         }) : ""}
          </div>
     </div>
   );

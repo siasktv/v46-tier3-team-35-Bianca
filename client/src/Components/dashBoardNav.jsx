@@ -43,8 +43,8 @@ function DashboardNav(props) {
           <li
             onClick={showResultsHandler}
             style={{
-              backgroundColor: show == "Results" && "#D3D3D3",
-              borderRadius: show == "Results" && 7,
+              backgroundColor: show == "Results" ? "#D3D3D3" : "",
+              borderRadius: show == "Results" ? 7 : "",
             }}
           >
             <a>
@@ -55,8 +55,8 @@ function DashboardNav(props) {
           <li
             onClick={ShowAllCryptosHandler}
             style={{
-              backgroundColor: show == "All Cryptos" && "#D3D3D3",
-              borderRadius: show == "All Cryptos" && 7,
+              backgroundColor: show == "All Cryptos" ? "#D3D3D3" : "",
+              borderRadius: show == "All Cryptos" ? 7 : "",
             }}
           >
             <a>
@@ -67,8 +67,8 @@ function DashboardNav(props) {
           <li
             onClick={showTopCryptosHandler}
             style={{
-              backgroundColor: show == "Top Cryptos" && "#D3D3D3",
-              borderRadius: show == "Top Cryptos" && 7,
+              backgroundColor: show == "Top Cryptos" ? "#D3D3D3" : "",
+              borderRadius: show == "Top Cryptos" ? 7 : "",
             }}
           >
             <a>
@@ -79,8 +79,8 @@ function DashboardNav(props) {
           <li
             onClick={showCategoriesHandler}
             style={{
-              backgroundColor: show == "Categories" && "#D3D3D3",
-              borderRadius: show == "Categories" && 7,
+              backgroundColor: show == "Categories" ? "#D3D3D3" : "",
+              borderRadius: show == "Categories" ? 7 : "",
             }}
           >
             <a>
