@@ -84,21 +84,21 @@ function NavBar({ auth, setSearch }) {
             <AiOutlineSearch />
           </button>
         </Link>
-        <button className="btn btn-ghost btn-circle">
-          <Link to="/prices">
+        <Link to="/prices">
+          <button className="btn btn-ghost btn-circle">
             <BiHomeAlt2 />
-          </Link>
-        </button>
+          </button>
+        </Link>
         <button className="btn btn-ghost btn-circle">
           <Link to="/dashboard">
             <BiSolidDashboard />
           </Link>
         </button>
-        <button className="btn btn-ghost btn-circle">
-          <Link to="/favorite">
+        <Link to="/favorite">
+          <button className="btn btn-ghost btn-circle">
             <AiOutlineHeart />
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     </div>
   );
