@@ -8,6 +8,9 @@ import DashboardNav from "./Components/dashBoardNav";
 import NavBar from "./Components/Navbar";
 import { useState } from "react";
 import Footer from "./Footer";
+import Prices from "./Prices";
+import Detail from "./Detail";
+import Favorite from "./Favorite";
 
 function App() {
   const authConst = Auth;
@@ -33,6 +36,12 @@ function App() {
             }
           />
           <Route path="/dashboard" element={<DashboardNav search={search} />} />
+          <Route path="/prices" element={<Prices />} />
+          <Route path="/coin/:id" element={<Detail email="test@gmail.com" />} />
+          <Route
+            path="/favorite"
+            element={<Favorite email="test@gmail.com" />}
+          />
         </Routes>
       </div>
       <Footer />

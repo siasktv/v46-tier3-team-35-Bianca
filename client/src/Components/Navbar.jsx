@@ -14,8 +14,8 @@ function NavBar({ auth, setSearch }) {
   }
 
   function submitHandler(e) {
-    if (e.key === 'Enter') {
-        setSearch(input);
+    if (e.key === "Enter") {
+      setSearch(input);
     }
   }
 
@@ -47,12 +47,16 @@ function NavBar({ auth, setSearch }) {
               <li>
                 <Link to="/profile">Profile</Link>
               </li>
-            ) : ""}
-            {isAuthenticated() ? <li>
-              <button onClick={logout}>
-                {"Log Out"}
-              </button>
-            </li> : ""}
+            ) : (
+              ""
+            )}
+            {isAuthenticated() ? (
+              <li>
+                <button onClick={logout}>{"Log Out"}</button>
+              </li>
+            ) : (
+              ""
+            )}
             {auth.isAuthenticated() ? (
               <Link to="/profile">View profile</Link>
             ) : (
@@ -72,22 +76,29 @@ function NavBar({ auth, setSearch }) {
           onChange={setInputHandler}
           onKeyDown={submitHandler}
         />
-        <Link to="/dashboard"><button onClick={setSearchHandler} style={{marginRight:30, fontSize:20, marginLeft:10}}><AiOutlineSearch/></button></Link> 
-        <button className="btn btn-ghost btn-circle">
-          <Link to="/">
+        <Link to="/dashboard">
+          <button
+            onClick={setSearchHandler}
+            style={{ marginRight: 30, fontSize: 20, marginLeft: 10 }}
+          >
+            <AiOutlineSearch />
+          </button>
+        </Link>
+        <Link to="/prices">
+          <button className="btn btn-ghost btn-circle">
             <BiHomeAlt2 />
-          </Link>
-        </button>
+          </button>
+        </Link>
         <button className="btn btn-ghost btn-circle">
           <Link to="/dashboard">
             <BiSolidDashboard />
           </Link>
         </button>
-        <button className="btn btn-ghost btn-circle">
-          <Link to="/saved">
+        <Link to="/favorite">
+          <button className="btn btn-ghost btn-circle">
             <AiOutlineHeart />
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     </div>
   );
