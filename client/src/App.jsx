@@ -1,5 +1,5 @@
 import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
-import { Home } from "./Components/Routes/Home";
+import { Home } from "./Home";
 import { Profile } from "./Profile";
 import { Auth } from "./Auth/Auth";
 import { Callback } from "./Callback";
