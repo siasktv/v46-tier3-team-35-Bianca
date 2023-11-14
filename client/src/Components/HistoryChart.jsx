@@ -9,9 +9,9 @@ import {
   Tooltip,
   Filler,
   Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { useState,useEffect } from "react";
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import { useState, useEffect } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -24,41 +24,43 @@ ChartJS.register(
   Legend
 );
 
-
 const HistoryChart = (props) => {
-    const [cryptoHistory, setCryptoHistory] = useState([])
-    const id = props.id
+  const [cryptoHistory, setCryptoHistory] = useState([]);
+  const id = props.id;
   useEffect(() => {
-    fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=14`)
+    fetch(
+      `https://api.coingecko.com/api/v3/coins/${id.toLowerCase()}/market_chart?vs_currency=usd&days=14`
+    )
       .then((response) => response.json())
       .then((data) => setCryptoHistory(data.prices))
       .catch((error) => console.error(error));
   }, [id]);
 
-console.log(id)
-  const coinChartData = cryptoHistory ? cryptoHistory.map(value => ({ x: value[0], y: value[1].toFixed(2) })): [];
-  
+  const coinChartData = cryptoHistory
+    ? cryptoHistory.map((value) => ({ x: value[0], y: value[1].toFixed(2) }))
+    : [];
+
   const options = {
-    responsive: true
-  }
+    responsive: true,
+  };
   const data = {
-    labels: coinChartData.map(value => moment(value.x).format('MMM DD')),
+    labels: coinChartData.map((value) => moment(value.x).format("MMM DD")),
     datasets: [
       {
         fill: true,
-        label: `${id}`,
-        data: coinChartData.map(val => val.y),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      }
-    ]
-  }
+        label: `${id.toLowerCase()}`,
+        data: coinChartData.map((val) => val.y),
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+    ],
+  };
 
   return (
     <div>
       <Line options={options} data={data} />
     </div>
-  )
-}
+  );
+};
 
-export default HistoryChart
+export default HistoryChart;

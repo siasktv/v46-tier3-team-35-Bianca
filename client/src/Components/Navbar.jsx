@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import "../App.css";
+import { NavLink } from "react-router-dom";
 import { BiHomeAlt2, BiSolidDashboard } from "react-icons/bi";
 import { AiOutlineHeart, AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
@@ -14,8 +15,8 @@ function NavBar({ auth, setSearch }) {
   }
 
   function submitHandler(e) {
-    if (e.key === 'Enter') {
-        setSearch(input);
+    if (e.key === "Enter") {
+      setSearch(input);
     }
   }
 
@@ -43,18 +44,36 @@ function NavBar({ auth, setSearch }) {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
-            {isAuthenticated() && (
+            {isAuthenticated() ? (
               <li>
-                <Link to="/profile">Profile</Link>
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    isActive ? "Active" : "non-Active"
+                  }
+                >
+                  Profile
+                </NavLink>
               </li>
+            ) : (
+              ""
             )}
-            {isAuthenticated() && <li>
-              <button onClick={logout}>
-                {"Log Out"}
-              </button>
-            </li>}
+            {isAuthenticated() ? (
+              <li>
+                <button onClick={logout}>{"Log Out"}</button>
+              </li>
+            ) : (
+              ""
+            )}
             {auth.isAuthenticated() ? (
-              <Link to="/profile">View profile</Link>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive ? "Active" : "non-Active"
+                }
+              >
+                View profile
+              </NavLink>
             ) : (
               <button onClick={auth.login}>Log In</button>
             )}
@@ -72,21 +91,40 @@ function NavBar({ auth, setSearch }) {
           onChange={setInputHandler}
           onKeyDown={submitHandler}
         />
-        <Link to="/dashboard"><button onClick={setSearchHandler} style={{marginRight:30, fontSize:20, marginLeft:10}}><AiOutlineSearch/></button></Link> 
+        <NavLink to="/search">
+          <button
+            onClick={setSearchHandler}
+            style={{ marginRight: 30, fontSize: 20, marginLeft: 10 }}
+            className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
+          >
+            <AiOutlineSearch />
+          </button>
+        </NavLink>
+
         <button className="btn btn-ghost btn-circle">
-          <Link to="/">
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
+          >
             <BiHomeAlt2 />
-          </Link>
+          </NavLink>
         </button>
+
         <button className="btn btn-ghost btn-circle">
-          <Link to="/dashboard">
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
+          >
             <BiSolidDashboard />
-          </Link>
+          </NavLink>
         </button>
         <button className="btn btn-ghost btn-circle">
-          <Link to="/saved">
+          <NavLink
+            to="/favorite"
+            className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
+          >
             <AiOutlineHeart />
-          </Link>
+          </NavLink>
         </button>
       </div>
     </div>

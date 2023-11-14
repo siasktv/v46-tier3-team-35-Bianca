@@ -5,8 +5,10 @@ function Trade(props) {
   const cryptoInfo = props.cryptoInfo;
 
   return (
+    <div className="Trade-div">
     <div
       className="card w-96 bg-base-100 shadow-xl"
+      
       style={{
         marginLeft: 880,
         backgroundColor: "#6699CC",
@@ -16,24 +18,23 @@ function Trade(props) {
     >
       <h2 className="oneCryptoValue">
         $
-        {cryptoInfo.length === undefined &&
-          cryptoInfo.market_data.current_price.usd}
+        {cryptoInfo.length === undefined ?
+          cryptoInfo.market_data.current_price.usd : ""}
       </h2>
       <a
         href={
-          cryptoInfo.length === undefined && cryptoInfo.links.blockchain_site[0]
+          cryptoInfo.length === undefined ? cryptoInfo.links.blockchain_site[0] : ""
         }
       >
         <span className="exchange">Exhange:</span>
         <span className="exchange-value">
-          1 {cryptoInfo.length === undefined && cryptoInfo.symbol} = $
-          {cryptoInfo.length === undefined && cryptoInfo.market_data.current_price.usd}
+          1 {cryptoInfo.length === undefined ? cryptoInfo.symbol : ""} = $
+          {cryptoInfo.length === undefined ? cryptoInfo.market_data.current_price.usd : ""}
         </span>
         <button
-          class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
-          className="CTA-button"
+          className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
         >
-          Trade {cryptoInfo.length === undefined && cryptoInfo.name}!
+          Trade {cryptoInfo.length === undefined ? cryptoInfo.name : ""}!
         </button>
       </a>
       <div
@@ -55,12 +56,13 @@ function Trade(props) {
             <span>
               <img
                 className="Get-Logo"
-                src={cryptoInfo.length === undefined && cryptoInfo.image.thumb}
+                src={cryptoInfo.length === undefined ? cryptoInfo.image.thumb : ""}
               />
             </span>
           </h2>
         </div>
       </div>
+    </div>
     </div>
   );
 }

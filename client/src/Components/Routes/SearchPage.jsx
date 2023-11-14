@@ -1,27 +1,26 @@
 import { useState, useEffect } from "react";
-import "../Search/SearchPage.css"
+import "../Search/SearchPage.css";
 import HistoryChart from "../HistoryChart";
-import SearchPageStats from "./SearchPageStats";
-import RecentTransactions from "./SearchPageRecentTransactions";
-import SearchPageNews from "./SearchPageNews";
-import Description from "./SearchPageDescription";
-import Trade from "./SearchPageTrade";
+import SearchPageStats from "../Search/SearchPageStats";
+import RecentTransactions from "../Search/SearchPageRecentTransactions";
+import SearchPageNews from "../Search/SearchPageNews";
+import Description from "../Search/SearchPageDescription";
+import Trade from "../Search/SearchPageTrade";
 function SearchPage(props) {
   const search = props.search;
   const [cryptoId, setCryptoId] = useState([]);
   const [cryptoInfo, setCryptoInfo] = useState([]);
-  const [name, setName] = useState('')
+  const [name, setName] = useState("");
+
 
   useEffect(() => {
-    setName(search)
-  },[search])
+    setName(search);
+  }, [search]);
   useEffect(() => {
     fetch(`https://api.coingecko.com/api/v3/search?query=${search}`)
       .then((response) => response.json())
       .then((data) => setCryptoId(data.coins[0].id))
       .catch((error) => console.error(error));
-
-     
   }, [search]);
 
   useEffect(() => {
@@ -29,11 +28,10 @@ function SearchPage(props) {
       .then((response) => response.json())
       .then((data) => setCryptoInfo(data))
       .catch((error) => console.error(error));
-     
   }, [cryptoId]);
 
   return (
-    <div>
+    <div style={{marginRight:250}}>
       <div
         className="avatar"
         style={{ width: 170, height: "auto", marginLeft: 50, marginTop: 20 }}
@@ -48,7 +46,9 @@ function SearchPage(props) {
           {cryptoInfo.length === undefined ? cryptoInfo.name : ""}
         </h2>
         <h2 className="crypto-symbol">
-          {cryptoInfo.length === undefined ? cryptoInfo.symbol.toUpperCase() : ""}
+          {cryptoInfo.length === undefined
+            ? cryptoInfo.symbol.toUpperCase()
+            : ""}
         </h2>
       </div>
       <div
@@ -64,10 +64,11 @@ function SearchPage(props) {
       >
         <h2 className="Crypto-price">
           $
-          {cryptoInfo.length === undefined ?
-            cryptoInfo.market_data.current_price.usd
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",") : ""}{" "}
+          {cryptoInfo.length === undefined
+            ? cryptoInfo.market_data.current_price.usd
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            : ""}{" "}
           USD{" "}
           <span className="hr-change-percent">
             {cryptoInfo.length === undefined ? (
@@ -80,20 +81,25 @@ function SearchPage(props) {
                 }}
               >
                 %
-                {cryptoInfo.length === undefined ?
-                  cryptoInfo.market_data.market_cap_change_percentage_24h : ""}
+                {cryptoInfo.length === undefined
+                  ? cryptoInfo.market_data.market_cap_change_percentage_24h
+                  : ""}
               </span>
-            ) : ""}
+            ) : (
+              ""
+            )}
           </span>
         </h2>
         <HistoryChart id={search} />
       </div>
       <SearchPageStats cryptoInfo={cryptoInfo} />
       <Trade cryptoInfo={cryptoInfo} />
-      <div className="flex w-full">
-        <RecentTransactions cryptoInfo={cryptoInfo} />
-        <SearchPageNews cryptoInfoName={name} />
-        <Description cryptoInfo={cryptoInfo} />
+      <div className="Crypto-info">
+        <div className="flex w-full">
+          <RecentTransactions cryptoInfo={cryptoInfo} />
+          <SearchPageNews cryptoInfoName={search} />
+          <Description cryptoInfo={cryptoInfo} />
+        </div>
       </div>
     </div>
   );

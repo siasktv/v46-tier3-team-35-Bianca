@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function CryptoList() {
+function CryptoList(props) {
   const [cryptos, setCryptos] = useState([]);
+  const setSearch = props.setSearch
+  const navigate = useNavigate()
   useEffect(() => {
     fetch(
       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en"
@@ -10,10 +13,13 @@ function CryptoList() {
       .then((data) => setCryptos(data))
       .catch((error) => console.error(error));
   }, []);
-  console.log(cryptos);
 
+  function ViewCryptoDetailsHandler(crypto) {
+    navigate('/search');
+      setSearch(crypto.name)
+  }
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" style={{marginLeft:-1400}}>
       <table className="table" style={{ width: "1400px" }}>
         <thead>
           <tr>
@@ -24,9 +30,9 @@ function CryptoList() {
           </tr>
         </thead>
         <tbody>
-          {cryptos.map((crypto) => {
+          {cryptos.map((crypto, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
@@ -44,20 +50,27 @@ function CryptoList() {
                   </div>
                 </td>
                 <td>
-                {crypto.current_price ? crypto.current_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","): 'undefined'}
+                  {crypto.current_price
+                    ? crypto.current_price
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    : "undefined"}
                   <br />
-                  {/* <span className="badge badge-ghost badge-sm">Desktop Support Technician</span> */}
                 </td>
                 <td>
-                {crypto.market_cap ? crypto.market_cap.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","): 'undefined'}
+                  {crypto.market_cap
+                    ? crypto.market_cap
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    : "undefined"}
                   <br />
-                  {/* <span className="badge badge-ghost badge-sm">Desktop Support Technician</span> */}
                 </td>
                 <td>${crypto.high_24h}</td>
                 <th>
                   <button
                     className="btn btn-ghost btn-xs"
                     style={{ right: -10 }}
+                    onClick={() => ViewCryptoDetailsHandler(crypto)}
                   >
                     details
                   </button>
@@ -66,14 +79,6 @@ function CryptoList() {
             );
           })}
         </tbody>
-        <tfoot>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Rank</th>
-            <th></th>
-          </tr>
-        </tfoot>
       </table>
     </div>
   );

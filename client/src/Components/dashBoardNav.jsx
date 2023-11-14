@@ -1,96 +1,70 @@
-import { useState } from "react";
-import Dashboard from "./Routes/dashboard";
+import "./Search/SearchPage.css";
 import { FaBitcoin } from "react-icons/fa";
 import { FaRankingStar } from "react-icons/fa6";
 import { BiSolidCategory, BiSearch } from "react-icons/bi";
+import { NavLink } from "react-router-dom";
 
-function DashboardNav(props) {
-  const [show, setShow] = useState("");
-  const search = props.search;
-
-  function showResultsHandler() {
-    setShow("Results");
-  }
-  function showTopCryptosHandler() {
-    setShow("Top Cryptos");
-  }
-
-  function ShowAllCryptosHandler() {
-    setShow("All Cryptos");
-  }
-
-  function showCategoriesHandler() {
-    setShow("Categories");
-  }
+function DashboardNav() {
   return (
     <div className="drawer lg:drawer-open" style={{ display: "flex" }}>
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-center">
         <label
           htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden"
+          className="btn btn-primary drawer- NavLink lg:hidden"
         >
           Open drawer
         </label>
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side" style={{ width: 250 }}>
         <label
           htmlFor="my-drawer-2"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-          <li
-            onClick={showResultsHandler}
-            style={{
-              backgroundColor: show == "Results" && "#D3D3D3",
-              borderRadius: show == "Results" && 7,
-            }}
-          >
-            <a>
+          <li>
+            <NavLink
+              to="/search"
+              style={{ width: "100%" }}
+              className={({ isActive }) => (isActive ? "Active" : "non-Active")}
+            >
               <BiSearch />
               Search Result
-            </a>
+            </NavLink>
           </li>
-          <li
-            onClick={ShowAllCryptosHandler}
-            style={{
-              backgroundColor: show == "All Cryptos" && "#D3D3D3",
-              borderRadius: show == "All Cryptos" && 7,
-            }}
-          >
-            <a>
+          <li>
+            <NavLink
+              to="/cryptos"
+              style={{ width: "100%" }}
+              className={({ isActive }) => (isActive ? "Active" : "non-Active")}
+            >
               <FaBitcoin />
               All Crypto
-            </a>
+            </NavLink>
           </li>
-          <li
-            onClick={showTopCryptosHandler}
-            style={{
-              backgroundColor: show == "Top Cryptos" && "#D3D3D3",
-              borderRadius: show == "Top Cryptos" && 7,
-            }}
-          >
-            <a>
+          <li>
+            <NavLink
+              to="/topCryptos"
+              style={{ width: "100%" }}
+              className={({ isActive }) => (isActive ? "Active" : "non-Active")}
+            >
               <FaRankingStar />
               Top Cryptos
-            </a>
+            </NavLink>
           </li>
-          <li
-            onClick={showCategoriesHandler}
-            style={{
-              backgroundColor: show == "Categories" && "#D3D3D3",
-              borderRadius: show == "Categories" && 7,
-            }}
-          >
-            <a>
+          <li>
+            <NavLink
+              to="/categories"
+              style={{ width: "100%" }}
+              className={({ isActive }) => (isActive ? "Active" : "non-Active")}
+            >
               <BiSolidCategory />
               Categories
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
-      <Dashboard show={show} search={search} />
     </div>
   );
 }

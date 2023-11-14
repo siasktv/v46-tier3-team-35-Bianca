@@ -1,34 +1,20 @@
 import { useState, useEffect } from "react";
+import ImageNotFound from "../Search/istockphoto-1409329028-612x612.jpg";
 
 function SearchPageNews(props) {
-  const cryptoInfo = props.cryptoInfo;
+  const [searchName, setSearchName] = useState("");
   const [cryptoNews, setCryptoNews] = useState([]);
-  console.log(cryptoInfo);
-
+  const cryptoName = props.cryptoInfoName;
+  useEffect(() => {
+    setSearchName(cryptoName);
+  }, [cryptoName]);
   useEffect(() => {
     fetch(
-      `https://bing-news-search1.p.rapidapi.com/news/search?q=Bitcoin&freshness=Day&textFormat=Raw&safeSearch=Off`,
-      {
-        method: "GET",
-        headers: {
-          "X-BingApis-SDK": "true",
-          "X-RapidAPI-Key":
-            "096663313fmsh3c4f6da87bc524bp14db7ajsn7ba4f2da7f6c",
-          "X-RapidAPI-Host": "bing-news-search1.p.rapidapi.com",
-        },
-      }
+      `https://newsapi.org/v2/everything?q=bitcoin&apikey=b1e741bd4be645978f82c93c49c2f549`
     )
-      .then((response) => response.json())
-      .then((json) => {
-        setCryptoNews(json.value);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  console.log(cryptoNews);
-
+      .then((res) => res.json())
+      .then((data) => setCryptoNews(data.articles));
+  }, [cryptoName]);
   return (
     <div>
       <div
@@ -45,18 +31,29 @@ function SearchPageNews(props) {
       >
         <h2 className="News-title">News</h2>
         <p className="Trending">Trending</p>
-        {cryptoNews.length > 0 &&
-          cryptoNews.map((news) => {
-            return (
-              <div>
-              <a href={news.url}><div className="News-div">
-                <img src={news.image.thumbnail.contentUrl} className="News-image" />
-                <span className="news-name">{news.name}</span>
-              </div></a>
-              {/* <p className="news-provider">{news.provider[0].name}</p> */}
-              </div>
-            );
-          })}
+        {cryptoNews.length > 0
+          ? cryptoNews.map((news,index) => {
+              return (
+                <div key={index}>
+                  <a href={news.url ? news.url : ""}>
+                    <div className="News-div">
+                      {news.urlToImage ? (
+                        <img src={news.urlToImage} className="News-image" />
+                      ) : (
+                        <img
+                          src={<ImageNotFound />}
+                          className="image-not-found"
+                        />
+                      )}
+                      <span className="news-name">
+                        {news.title && news.title}
+                      </span>
+                    </div>
+                  </a>
+                </div>
+              );
+            })
+          : ""}
       </div>
     </div>
   );
