@@ -43,7 +43,7 @@ export const Home = ({ auth }) => {
           )}
         </div>
       </div>
-      <div className="flex flex-col items-center mt-52 gap-8">
+      <div className="flex flex-col items-center mt-52 gap-8 mb-52">
         <h2 className="text-[#0D3E36] font-bold text-3xl">
           CryptoCap Amazing Faetures
         </h2>
