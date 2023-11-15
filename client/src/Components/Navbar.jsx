@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { BiHomeAlt2, BiSolidDashboard } from "react-icons/bi";
 import { AiOutlineHeart, AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
+
 function NavBar({ auth, setSearch }) {
-  const { isAuthenticated, login, logout } = auth;
+  const { isAuthenticated, login, logout, setSession } = auth;
   const [input, setInput] = useState("");
   function setInputHandler(e) {
     setInput(e.target.value);
@@ -18,6 +19,8 @@ function NavBar({ auth, setSearch }) {
       setSearch(input);
     }
   }
+
+  setSession();
 
   return (
     <div className="navbar bg-base-100">

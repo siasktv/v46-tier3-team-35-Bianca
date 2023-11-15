@@ -11,6 +11,7 @@ import { featureData } from "./data/featureData";
 export const Home = ({ auth }) => {
   const [cryptoCoins, setCryptoCoins] = useState();
 
+
   useEffect(() => {
     const fetchCryptoCoins = async () => {
       try {
@@ -22,9 +23,21 @@ export const Home = ({ auth }) => {
       } catch (error) {
         console.log(error);
       }
-    };
+    }
     fetchCryptoCoins();
   }, []);
+
+  // useEffect(() => {
+  //   if (auth && auth.setSession) {
+  //     auth.setSession();
+  //   }
+  //   auth.setSession(authResult).then(result => {
+  //     console.log(result);
+  //   }).catch(error => {
+  //     console.error(error);
+  //   });
+  // }, [auth]);
+ 
 
   console.log(cryptoCoins);
 

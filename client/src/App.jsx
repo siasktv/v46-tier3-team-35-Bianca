@@ -12,6 +12,7 @@ import Prices from "./Prices";
 import Detail from "./Detail";
 import Favorite from "./Favorite";
 
+
 function App() {
   const authConst = Auth;
   const [search, setSearch] = useState("");
@@ -20,28 +21,28 @@ function App() {
       <NavBar auth={authConst} setSearch={setSearch} />
       <div className="body">
         <Routes>
-          <Route path="/" element={<Home auth={authConst} />} />
-          <Route
-            path="/callback"
-            element={<Callback auth={authConst} loc={location} />}
-          />
-          <Route
-            path="/profile"
-            element={
-              authConst.isAuthenticated() ? (
-                <Profile auth={authConst} />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route path="/dashboard" element={<DashboardNav search={search} />} />
-          <Route path="/prices" element={<Prices />} />
-          <Route path="/coin/:id" element={<Detail email="test@gmail.com" />} />
-          <Route
-            path="/favorite"
-            element={<Favorite email="test@gmail.com" />}
-          />
+            <Route path="/" element={<Home auth={authConst} />} />
+            <Route
+              path="/callback"
+              element={<Callback auth={authConst} loc={location} />}
+            />
+            <Route
+              path="/profile"
+              element={
+                authConst.isAuthenticated() ? (
+                  <Profile auth={authConst} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route path="/dashboard" element={<DashboardNav search={search} />} />
+            <Route path="/prices" element={<Prices />} />
+            <Route path="/coin/:id" element={<Detail email="test@gmail.com" />} />
+            <Route
+              path="/favorite"
+              element={<Favorite email="test@gmail.com" />}
+            />
         </Routes>
       </div>
       <Footer />

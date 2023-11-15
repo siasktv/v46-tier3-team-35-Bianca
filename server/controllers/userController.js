@@ -2,15 +2,21 @@ const User = require("../models/user");
 
 // create user
 const createUser = async (req, res) => {
-  console.log('[From POST handler]', req.body)
   try {
+    
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      console.log('User exists, sending 400 response');
+      return res.status(400).json({ message: 'Email already in use' });
+    }
     const user = await User.create(req.body);
-    console.log(user);
+    console.log('User created:', user);
+    res.json(user);
   } catch (error) {
-    res.status(400).json(error)
-    console.log(error);
+    console.log('Error in createUser:', error);
+    res.status(400).json(error);
   }
-}
+};
 
 // get user by id
 const getUserById = async (req, res) => {
