@@ -14,7 +14,7 @@ const createUser = async (req, res) => {
     res.json(user);
   } catch (error) {
     console.log('Error in createUser:', error);
-    res.status(400).json(error);
+   return res.status(400).json(error);
   }
 };
 
@@ -22,6 +22,17 @@ const createUser = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).exec();
+    console.log(user);
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+}
+
+// get user by email
+const getUserByEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email }).exec();
     console.log(user);
     res.json(user);
   } catch (error) {
@@ -55,6 +66,7 @@ const deleteUser = async (req, res) => {
   }
 }
 
+
 module.exports = {
-  createUser, getUserById, updateUser, deleteUser
+  createUser, getUserById, updateUser, deleteUser, getUserByEmail
 };

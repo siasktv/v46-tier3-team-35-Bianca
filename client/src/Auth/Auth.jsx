@@ -15,7 +15,7 @@ const login = () => {
 
 const setSession = async (authResult) => {
   if (!authResult) return;
-  console.log(authResult);
+  console.log("authResult",authResult);
   // set the time that the access token will expire
   const expiresAt = JSON.stringify(
     authResult.expiresIn * 1000 + new Date().getTime()
@@ -34,24 +34,25 @@ const setSession = async (authResult) => {
 
   //call the endpoint to create the user on mongodb
   try{
-    let response = await axios.post("http://localhost:8000/users/create", {
+    const response = await axios.post("http://localhost:8000/users/create", {
       email: authResult.idTokenPayload.email,
       fullName: authResult.idTokenPayload.name,
       image: authResult.idTokenPayload.picture,
     });
     console.log("respuesta",response.data);
-
-     // If the user is already created, get the user data from the server
-     if (response.status === 400) {
-      response = await axios.get(`http://localhost:8000/users/${authResult.idTokenPayload.email}`);
-    }
-
-    console.log("respuesta", response.data);
-
-     // Store the returned user in the session
-     localStorage.setItem("user", JSON.stringify(response.data));
+  
+    // Store the returned user in the session
+    localStorage.setItem("user", JSON.stringify(response.data));
   }catch(error){
     console.log(error);
+    if (error.response && error.response.status === 400) {
+      // If the user is already created, get the user data from the server
+      const response = await axios.get(`http://localhost:8000/users/email/${authResult.idTokenPayload.email}`);
+      console.log("respuesta", response.data);
+  
+      // Store the returned user in the session
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
   }
 };
 
@@ -101,22 +102,13 @@ const getAccessToken = () => {
 //   });
 // };
 
-const getProfile = async () => {
+const getProfile = () => {
   // Get the user data from the local storage
   const user = JSON.parse(localStorage.getItem('user'));
 
-  // Check if the user data exists and it has an _id property
-  if (user && user._id) {
-    try {
-      const response = await axios.get(`http://localhost:8000/users/${user._id}`, {
-        headers: {
-          Authorization: `Bearer ${getAccessToken()}`
-        }
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error:', error);
-    }
+  // Check if the user data exists
+  if (user) {
+    return user;
   } else {
     console.error('User not found in local storage');
   }
