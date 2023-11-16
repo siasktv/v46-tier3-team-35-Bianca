@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const Profile = ({ auth }) => {
   const [profile, setProfile] = useState(null);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [image, setImage] = useState("");
   const [error, setError] = useState("");
 
   const loadUserProfile = () => {
@@ -16,8 +20,62 @@ export const Profile = ({ auth }) => {
   };
 
   useEffect(() => {
-    loadUserProfile();
+    try {
+      const profile = auth.getProfile();
+      setProfile(profile);
+      setFullName(profile?.fullName || "");
+      setEmail(profile?.email || "");
+      setImage(profile?.image || "");
+
+    } catch (error) {
+      console.error("Error loading profile:", error);
+      setError(error);
+    }
   }, []);
+
+  console.log(profile)
+
+  const handleFullNameChange = (event) => {
+    setFullName(event.target.value);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleImageChange = (event) => {
+    setImage(event.target.value);
+  };
+
+  const updateUser = async () => {
+    try {
+      const response = await axios.put(`http://localhost:8000/users/${profile?._id}/edit`, {
+        fullName,
+        email,
+        image,
+      });
+      if (response.status === 200) {
+        setProfile(response.data);
+      } else {
+        console.error('Error updating user:', response);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const deleteUser = async () => {
+    try {
+      const response = await axios.delete(`http://localhost:8000/users/${profile?._id}/delete`);
+      if (response.status === 200) {
+        auth.logout();
+      } else {
+        console.error('Error deleting user:', response);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     profile && (
@@ -38,7 +96,10 @@ export const Profile = ({ auth }) => {
                   </button>
                 </div>
                 <div>
-                  <button className="bg-[#0FAE96] text-white font-bold py-2 rounded-lg px-6 hover:bg-[#0F8E86] transform hover:scale-105 transition-all duration-200">
+                  <button 
+                  className="bg-[#0FAE96] text-white font-bold py-2 rounded-lg px-6 hover:bg-[#0F8E86] transform hover:scale-105 transition-all duration-200"
+                  onClick={updateUser}
+                  >
                     Save
                   </button>
                 </div>
@@ -50,7 +111,7 @@ export const Profile = ({ auth }) => {
           <div className="flex mt-6 justify-between">
             <img
               className="rounded-full w-18 h-18"
-              src={profile?.profile?.picture}
+              src={profile?.image}
             />
             <div>
               <button className="border-[#EAEAEA] border text-[#808080] hover:transform hover:scale-105 transition-all duration-200 rounded-lg py-2 px-6">
@@ -62,7 +123,8 @@ export const Profile = ({ auth }) => {
             <h2 className="font-bold">Full name</h2>
             <input
               className="border-[#EAEAEA] border rounded-lg py-2 px-6"
-              value={profile?.profile?.name || ""}
+              value={fullName} 
+              onChange={handleFullNameChange}
             />
           </div>
 
@@ -70,7 +132,8 @@ export const Profile = ({ auth }) => {
             <h2 className="font-bold">Email</h2>
             <input
               className="border-[#EAEAEA] border rounded-lg py-2 px-6"
-              value={profile?.profile?.email || ""}
+              value={email} 
+              onChange={handleEmailChange}
             />
           </div>
         </div>
@@ -86,7 +149,10 @@ export const Profile = ({ auth }) => {
               By deleting your account you will loose all your data
             </p>
             <div>
-              <button className="border-[#EAEAEA] border text-[#808080] hover:bg-red-600 hover:text-white hover:transform hover:scale-105 transition-all duration-200 rounded-lg py-2 px-6">
+              <button 
+              className="border-[#EAEAEA] border text-[#808080] hover:bg-red-600 hover:text-white hover:transform hover:scale-105 transition-all duration-200 rounded-lg py-2 px-6"
+              onClick={deleteUser}
+              >
                 Delete account
               </button>
             </div>

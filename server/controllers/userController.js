@@ -2,20 +2,37 @@ const User = require("../models/user");
 
 // create user
 const createUser = async (req, res) => {
-  console.log('[From POST handler]', req.body)
   try {
+    
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      console.log('User exists, sending 400 response');
+      return res.status(400).json({ message: 'Email already in use' });
+    }
     const user = await User.create(req.body);
-    console.log(user);
+    console.log('User created:', user);
+    res.json(user);
   } catch (error) {
-    res.status(400).json(error)
-    console.log(error);
+    console.log('Error in createUser:', error);
+   return res.status(400).json(error);
   }
-}
+};
 
 // get user by id
 const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).exec();
+    console.log(user);
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+}
+
+// get user by email
+const getUserByEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email }).exec();
     console.log(user);
     res.json(user);
   } catch (error) {
@@ -49,6 +66,7 @@ const deleteUser = async (req, res) => {
   }
 }
 
+
 module.exports = {
-  createUser, getUserById, updateUser, deleteUser
+  createUser, getUserById, updateUser, deleteUser, getUserByEmail
 };

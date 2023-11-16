@@ -11,6 +11,7 @@ import { featureData } from "./data/featureData";
 export const Home = ({ auth }) => {
   const [cryptoCoins, setCryptoCoins] = useState();
 
+
   useEffect(() => {
     const fetchCryptoCoins = async () => {
       try {
@@ -22,9 +23,21 @@ export const Home = ({ auth }) => {
       } catch (error) {
         console.log(error);
       }
-    };
+    }
     fetchCryptoCoins();
   }, []);
+
+  // useEffect(() => {
+  //   if (auth && auth.setSession) {
+  //     auth.setSession();
+  //   }
+  //   auth.setSession(authResult).then(result => {
+  //     console.log(result);
+  //   }).catch(error => {
+  //     console.error(error);
+  //   });
+  // }, [auth]);
+ 
 
   console.log(cryptoCoins);
 
@@ -43,7 +56,7 @@ export const Home = ({ auth }) => {
           )}
         </div>
       </div>
-      <div className="flex flex-col items-center mt-52 gap-8">
+      <div className="flex flex-col items-center mt-52 gap-8 mb-52">
         <h2 className="text-[#0D3E36] font-bold text-3xl">
           CryptoCap Amazing Faetures
         </h2>
