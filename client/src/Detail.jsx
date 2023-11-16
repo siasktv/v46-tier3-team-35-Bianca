@@ -1,3 +1,4 @@
+import "../src/App.css";
 import {
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
@@ -5,7 +6,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { Tooltip as InfoTooltip } from "react-tooltip";
-
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
@@ -36,8 +37,25 @@ ChartJS.register(
 
 const ranges = ["1d", "7d", "30d", "90d", "180d", "365d", "max"];
 
-function Detail() {
-  const email = "test@gmail.com";
+function Detail({ auth }) {
+  const [profile, setProfile] = useState("");
+  const [profileEmail, setProfileEmail] = useState("");
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  useEffect(() => {
+    setUserLoggedIn(auth.isAuthenticated());
+  }, [auth]);
+  useEffect(() => {
+    loadUserProfile();
+  }, [userLoggedIn]);
+  const loadUserProfile = () => {
+    userLoggedIn
+      ? auth.getProfile((profile, error) => setProfile({ profile, error }))
+      : "";
+  };
+
+  useEffect(() => {
+    setProfileEmail(profile.profile ? profile.profile.email : "");
+  }, [profile]);
 
   const { id } = useParams();
   const [coin, setCoin] = useState(null);
@@ -58,17 +76,15 @@ function Detail() {
         const params = { vs_currency: "usd", days: timeRange };
         const { data } = await axios.get(endpoint, { params });
         setCoin(data);
-        console.log(data);
         // get coinInfo
         const info = await axios.get(
           `https://api.coingecko.com/api/v3/coins/${id}`
         );
         setCoinInfo(info.data);
-        console.log(info.data);
         // Check if the coin is liked
 
         const response = await axios.get(
-          `http://localhost:8000/favorite/check?name=${id}&userEmail=${email}`
+          `http://localhost:8000/favorite/check?name=${id}&userEmail=${profileEmail}`
         );
         if (response.data.liked) {
           setLiked(true);
@@ -81,7 +97,7 @@ function Detail() {
     }
 
     fetchData();
-  }, [email, id, timeRange]);
+  }, [profileEmail, id, timeRange]);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -114,7 +130,7 @@ function Detail() {
       await axios.post("http://localhost:8000/favorite/like", {
         name: id,
         image: coinInfo.image.large,
-        userEmail: email,
+        userEmail: profileEmail,
       });
       setLiked(true);
     } catch (error) {
@@ -127,7 +143,7 @@ function Detail() {
       await axios.delete("http://localhost:8000/favorite/dislike", {
         data: {
           name: id,
-          userEmail: email,
+          userEmail: profileEmail,
         },
       });
       setLiked(false);
@@ -186,6 +202,9 @@ function Detail() {
           <div className="mx-auto max-w-2xl px-4 pb-24 pt-6 sm:px-6 sm:pb-32 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             {/* coin data */}
             <div className="lg:max-w-lg lg:self-end">
+              <Link to="/dashboard">
+                <a className="previous round">&#8249;</a>
+              </Link>
               <span className="mb-5 inline-flex items-center rounded-md bg-[#1E293B] px-2 py-1 text-xs font-semibold text-[#F1F5F9]">
                 Rank # {coinInfo.coingecko_rank}
               </span>

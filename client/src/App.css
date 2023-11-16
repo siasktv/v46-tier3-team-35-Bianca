@@ -1,8 +1,30 @@
-
+body {
+  width: 100%;
+}
+.mb-5 {
+  margin-left: -30px;
+}
 .non-Active2 {
-    background-color: transparent;
-  }
-  .Active2 {
-   color: #0FAE96;
-  }
-  
+  background-color: transparent;
+}
+.Active2 {
+  color: #0fae96;
+}
+
+.previous {
+  position: absolute;
+  margin-top: -18px;
+  background-color: #f1f1f1;
+  color: black;
+  margin-left: -150px;
+  margin-right: 110px;
+  cursor: pointer;
+}
+.round {
+  border-radius: 50%;
+}
+a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+}
