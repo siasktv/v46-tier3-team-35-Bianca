@@ -10,7 +10,7 @@ function CategoriesList() {
       .catch((error) => console.error(error));
   }, []);
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" style={{ marginLeft: -1400 }}>
       <table className="table" style={{ width: "1400px" }}>
         <thead>
           <tr>
@@ -35,7 +35,12 @@ function CategoriesList() {
                   </div>
                 </td>
                 <td>
-                  ${crypto.market_cap ? crypto.market_cap.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","): 'undefined'}
+                  $
+                  {crypto.market_cap
+                    ? crypto.market_cap
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    : "undefined"}
                   <br />
                 </td>
                 <td>
@@ -50,22 +55,26 @@ function CategoriesList() {
                   <br />
                 </td>
                 <td>
-                  ${crypto.volume_24h ? crypto.volume_24h : 'undefined'}
+                  ${crypto.volume_24h ? crypto.volume_24h : "undefined"}
                   <br />
                 </td>
                 <td>
                   {" "}
-                  {crypto.market_cap_change_24h ? +crypto.market_cap_change_24h < 0 ? (
-                    <p style={{ display: "flex" }}>
-                      <AiOutlineCaretDown style={{ color: "red" }} />$
-                      {crypto.market_cap_change_24h}
-                    </p>
+                  {crypto.market_cap_change_24h ? (
+                    +crypto.market_cap_change_24h < 0 ? (
+                      <p style={{ display: "flex" }}>
+                        <AiOutlineCaretDown style={{ color: "red" }} />$
+                        {crypto.market_cap_change_24h}
+                      </p>
+                    ) : (
+                      <p style={{ display: "flex" }}>
+                        <AiOutlineCaretUp style={{ color: "green" }} /> $
+                        {crypto.market_cap_change_24h}
+                      </p>
+                    )
                   ) : (
-                    <p style={{ display: "flex" }}>
-                      <AiOutlineCaretUp style={{ color: "green" }} /> $
-                      {crypto.market_cap_change_24h}
-                    </p>
-                  ) : 'undefined'}
+                    "undefined"
+                  )}
                 </td>
                 <td>
                   <div className="avatar" style={{ paddingRight: 10 }}>
@@ -94,14 +103,6 @@ function CategoriesList() {
                   </div>
                   <br />
                 </td>
-                <th>
-                  <button
-                    className="btn btn-ghost btn-xs"
-                    style={{ right: -10 }}
-                  >
-                    details
-                  </button>
-                </th>
               </tr>
             );
           })}

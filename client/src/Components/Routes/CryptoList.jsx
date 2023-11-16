@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function CryptoList() {
+function CryptoList(props) {
   const [cryptos, setCryptos] = useState([]);
+  const setSearch = props.setSearch
+  const navigate = useNavigate()
   useEffect(() => {
     fetch(
       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en"
@@ -11,8 +14,12 @@ function CryptoList() {
       .catch((error) => console.error(error));
   }, []);
 
+  function ViewCryptoDetailsHandler(crypto) {
+    navigate('/search');
+      setSearch(crypto.name)
+  }
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" style={{marginLeft:-1400}}>
       <table className="table" style={{ width: "1400px" }}>
         <thead>
           <tr>
@@ -49,7 +56,6 @@ function CryptoList() {
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     : "undefined"}
                   <br />
-                  {/* <span className="badge badge-ghost badge-sm">Desktop Support Technician</span> */}
                 </td>
                 <td>
                   {crypto.market_cap
@@ -58,13 +64,13 @@ function CryptoList() {
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     : "undefined"}
                   <br />
-                  {/* <span className="badge badge-ghost badge-sm">Desktop Support Technician</span> */}
                 </td>
                 <td>${crypto.high_24h}</td>
                 <th>
                   <button
                     className="btn btn-ghost btn-xs"
                     style={{ right: -10 }}
+                    onClick={() => ViewCryptoDetailsHandler(crypto)}
                   >
                     details
                   </button>
