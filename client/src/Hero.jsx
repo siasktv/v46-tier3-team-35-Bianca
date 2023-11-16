@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export default function Hero() {
   return (
     <div className="hero min-h-screen">
@@ -9,7 +10,9 @@ export default function Hero() {
           Only at CryptoCap, you can build a good portfolio and learn best
           practices about cryptocurrency.
         </p>
-        <button className="btn bg-[#0FAE96] text-white">Get Started</button>
+        <Link to="/dashboard"><button className="btn bg-[#0FAE96] text-white">
+          Get Started
+        </button></Link>
       </div>
     </div>
   );

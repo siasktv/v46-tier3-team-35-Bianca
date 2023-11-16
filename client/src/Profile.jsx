@@ -8,6 +8,17 @@ export const Profile = ({ auth }) => {
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
 
+  const loadUserProfile = () => {
+    auth.getProfile((profile, error) => {
+      if (error) {
+        console.error("Error loading profile:", error);
+        setError(error);
+      } else {
+        setProfile({ profile, error });
+      }
+    });
+  };
+
   useEffect(() => {
     try {
       const profile = auth.getProfile();

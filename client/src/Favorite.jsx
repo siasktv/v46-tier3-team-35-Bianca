@@ -2,15 +2,34 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-function Favorite({ email }) {
+function Favorite({ auth }) {
   const [likedCoins, setLikedCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [profile, setProfile] = useState("");
+  const [profileEmail, setProfileEmail] = useState("");
+  const [userLoggedIn, setUserLoggedIn] = useState("");
+  useEffect(() => {
+    setUserLoggedIn(auth.isAuthenticated());
+  }, [auth]);
+  useEffect(() => {
+    loadUserProfile();
+  }, [userLoggedIn]);
+
+  const loadUserProfile = () => {
+    userLoggedIn
+      ? auth.getProfile((profile, error) => setProfile({ profile, error }))
+      : "";
+  };
+
+  useEffect(() => {
+    setProfileEmail(profile ? profile.profile.email : "");
+  }, [profile]);
 
   useEffect(() => {
     async function fetchLikedCoins() {
       try {
         const response = await axios.get(
-          `http://localhost:8000/favorite/list/${email}`
+          `http://localhost:8000/favorite/list/${profileEmail}`
         );
         setLikedCoins(response.data);
       } catch (err) {
@@ -21,14 +40,14 @@ function Favorite({ email }) {
     }
 
     fetchLikedCoins();
-  }, [email]);
+  }, [profileEmail]);
 
   const handleDislike = async (coinName) => {
     try {
       await axios.delete("http://localhost:8000/favorite/dislike", {
         data: {
           name: coinName,
-          userEmail: email,
+          userEmail: profileEmail,
         },
       });
       // You might want to update the state to remove the coin from the list

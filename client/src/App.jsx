@@ -1,3 +1,4 @@
+import './App.css'
 import {
   Route,
   BrowserRouter,
@@ -47,14 +48,8 @@ function App() {
               }
             />
             <Route path="/prices" element={<Prices />} />
-            <Route
-              path="/coin/:id"
-              element={<Detail email="test@gmail.com" />}
-            />
-            <Route
-              path="/favorite"
-              element={<Favorite email="test@gmail.com" />}
-            />
+            <Route path="/coin/:id" element={<Detail auth={authConst} />} />
+            <Route path="/favorite" element={<Favorite auth={authConst} />} />
           </Routes>
         </div>
         <div style={{ display: "flex" }}>
