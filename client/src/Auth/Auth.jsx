@@ -1,4 +1,5 @@
 import auth0 from "auth0-js";
+import axios from "axios";
 
 const auth0Const = new auth0.WebAuth({
   domain: import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN,
@@ -12,8 +13,9 @@ const login = () => {
   auth0Const.authorize();
 };
 
-const setSession = (authResult) => {
-  console.log(authResult);
+const setSession = async (authResult) => {
+  if (!authResult) return;
+  console.log("authResult",authResult);
   // set the time that the access token will expire
   const expiresAt = JSON.stringify(
     authResult.expiresIn * 1000 + new Date().getTime()
@@ -22,13 +24,43 @@ const setSession = (authResult) => {
   localStorage.setItem("access_token", authResult.accessToken);
   localStorage.setItem("id_token", authResult.idToken);
   localStorage.setItem("expires_at", expiresAt);
+
+  console.group();
+  console.log('email', authResult.idTokenPayload.email)
+  console.log('fullName', authResult.idTokenPayload.name)
+  console.log('image', authResult.idTokenPayload.picture)
+  console.groupEnd();
+
+
+  //call the endpoint to create the user on mongodb
+  try{
+    const response = await axios.post("http://localhost:8000/users/create", {
+      email: authResult.idTokenPayload.email,
+      fullName: authResult.idTokenPayload.name,
+      image: authResult.idTokenPayload.picture,
+    });
+    console.log("respuesta",response.data);
+  
+    // Store the returned user in the session
+    localStorage.setItem("user", JSON.stringify(response.data));
+  }catch(error){
+    console.log(error);
+    if (error.response && error.response.status === 400) {
+      // If the user is already created, get the user data from the server
+      const response = await axios.get(`http://localhost:8000/users/email/${authResult.idTokenPayload.email}`);
+      console.log("respuesta", response.data);
+  
+      // Store the returned user in the session
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+  }
 };
 
 const handleAuthentication = () => {
-  auth0Const.parseHash((err, authResult) => {
+  auth0Const.parseHash(async (err, authResult) => {
     if (authResult && authResult.accessToken && authResult.idToken) {
-      setSession(authResult);
-      window.location.assign("http://localhost:5173/");
+      await setSession(authResult);
+      window.location.assign("http://127.0.0.1:5173/");
     } else if (err) {
       alert(`Error: ${err.error}. Check the console for further details.`);
       console.log(err);
@@ -48,7 +80,7 @@ const logout = () => {
   userProfile = null;
   auth0Const.logout({
     clientID: import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID,
-    returnTo: "http://localhost:5173",
+    returnTo: "http://127.0.0.1:5173/",
   });
 };
 
@@ -62,12 +94,24 @@ const getAccessToken = () => {
   return accessToken;
 };
 
-const getProfile = (cb) => {
-  if (userProfile) return cb(userProfile);
-  auth0Const.client.userInfo(getAccessToken(), (err, profile) => {
-    if (profile) userProfile = profile;
-    cb(profile, err);
-  });
+// const getProfile = (cb) => {
+//   if (userProfile) return cb(userProfile);
+//   auth0Const.client.userInfo(getAccessToken(), (err, profile) => {
+//     if (profile) userProfile = profile;
+//     cb(profile, err);
+//   });
+// };
+
+const getProfile = () => {
+  // Get the user data from the local storage
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  // Check if the user data exists
+  if (user) {
+    return user;
+  } else {
+    console.error('User not found in local storage');
+  }
 };
 
 export const Auth = {
