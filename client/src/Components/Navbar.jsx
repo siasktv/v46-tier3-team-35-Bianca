@@ -91,15 +91,17 @@ function NavBar({ auth, setSearch }) {
           onChange={setInputHandler}
           onKeyDown={submitHandler}
         />
-        <NavLink to="/search">
-          <button
-            onClick={setSearchHandler}
-            style={{ marginRight: 30, fontSize: 20, marginLeft: 10 }}
+        <button
+          onClick={setSearchHandler}
+          style={{ marginRight: 30, fontSize: 20, marginLeft: 10 }}
+        >
+          <NavLink
+            to="/search"
             className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
           >
             <AiOutlineSearch />
-          </button>
-        </NavLink>
+          </NavLink>
+        </button>
 
         <button className="btn btn-ghost btn-circle">
           <NavLink
