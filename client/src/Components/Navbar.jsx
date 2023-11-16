@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import "../App.css";
+import { NavLink } from "react-router-dom";
 import { BiHomeAlt2, BiSolidDashboard } from "react-icons/bi";
 import { AiOutlineHeart, AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
@@ -45,7 +46,14 @@ function NavBar({ auth, setSearch }) {
           >
             {isAuthenticated() ? (
               <li>
-                <Link to="/profile">Profile</Link>
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    isActive ? "Active" : "non-Active"
+                  }
+                >
+                  Profile
+                </NavLink>
               </li>
             ) : (
               ""
@@ -58,7 +66,14 @@ function NavBar({ auth, setSearch }) {
               ""
             )}
             {auth.isAuthenticated() ? (
-              <Link to="/profile">View profile</Link>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive ? "Active" : "non-Active"
+                }
+              >
+                View profile
+              </NavLink>
             ) : (
               <button onClick={auth.login}>Log In</button>
             )}
@@ -76,29 +91,41 @@ function NavBar({ auth, setSearch }) {
           onChange={setInputHandler}
           onKeyDown={submitHandler}
         />
-        <Link to="/dashboard">
+        <NavLink to="/search">
           <button
             onClick={setSearchHandler}
             style={{ marginRight: 30, fontSize: 20, marginLeft: 10 }}
+            className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
           >
             <AiOutlineSearch />
           </button>
-        </Link>
-        <Link to="/prices">
-          <button className="btn btn-ghost btn-circle">
-            <BiHomeAlt2 />
-          </button>
-        </Link>
+        </NavLink>
+
         <button className="btn btn-ghost btn-circle">
-          <Link to="/dashboard">
-            <BiSolidDashboard />
-          </Link>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
+          >
+            <BiHomeAlt2 />
+          </NavLink>
         </button>
-        <Link to="/favorite">
-          <button className="btn btn-ghost btn-circle">
+
+        <button className="btn btn-ghost btn-circle">
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
+          >
+            <BiSolidDashboard />
+          </NavLink>
+        </button>
+        <button className="btn btn-ghost btn-circle">
+          <NavLink
+            to="/favorite"
+            className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
+          >
             <AiOutlineHeart />
-          </button>
-        </Link>
+          </NavLink>
+        </button>
       </div>
     </div>
   );
