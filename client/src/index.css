@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 :root {
-  display: flex;
+  display: grid;
 }
