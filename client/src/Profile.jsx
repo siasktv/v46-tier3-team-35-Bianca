@@ -9,17 +9,20 @@ export const Profile = ({ auth }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    try {
-      const profile = auth.getProfile();
-      setProfile(profile);
-      setFullName(profile?.fullName || "");
-      setEmail(profile?.email || "");
-      setImage(profile?.image || "");
-
-    } catch (error) {
-      console.error("Error loading profile:", error);
-      setError(error);
-    }
+    const loadProfile = async () => {
+      try {
+        const profile = await auth.getProfile();
+        setProfile(profile);
+        setFullName(profile?.fullName || "");
+        setEmail(profile?.email || "");
+        setImage(profile?.image || "");
+      } catch (error) {
+        console.error("Error loading profile:", error);
+        setError(error);
+      }
+    };
+  
+    loadProfile();
   }, []);
 
   console.log(profile)
@@ -33,16 +36,25 @@ export const Profile = ({ auth }) => {
   };
 
   const handleImageChange = (event) => {
-    setImage(event.target.value);
+    console.log(event.target.files[0])
+    setImage(event.target.files[0]);
   };
 
   const updateUser = async () => {
     try {
-      const response = await axios.put(`http://localhost:8000/users/${profile?._id}/edit`, {
-        fullName,
-        email,
-        image,
+      const formData = new FormData();
+      formData.append('fullName', fullName);
+      formData.append('email', email);
+      if (image) {
+        formData.append('image', image);
+      }
+  
+      const response = await axios.put(`http://localhost:8000/users/${profile?._id}/edit`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
+  
       if (response.status === 200) {
         setProfile(response.data);
       } else {
@@ -100,13 +112,14 @@ export const Profile = ({ auth }) => {
           <div className="flex mt-6 justify-between">
             <img
               className="rounded-full w-18 h-18"
-              src={profile?.image}
+              src={profile.image || "https://i.pravatar.cc/300"}
             />
-            <div>
+            {/* <div>
+              <input type="file" onChange={handleImageChange}/>
               <button className="border-[#EAEAEA] border text-[#808080] hover:transform hover:scale-105 transition-all duration-200 rounded-lg py-2 px-6">
                 Upload photo
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="flex mt-6 flex-col gap-2">
             <h2 className="font-bold">Full name</h2>

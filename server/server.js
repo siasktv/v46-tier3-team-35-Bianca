@@ -19,6 +19,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(morgan("dev"));
+app.use('/uploads', express.static('uploads'));
 
 app.use("/users", require("./routes/userRoutes.js"));
 app.use("/crypto", require("./routes/cryptoRoutes"));

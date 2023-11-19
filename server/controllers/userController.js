@@ -1,5 +1,6 @@
 const User = require("../models/user");
 
+
 // create user
 const createUser = async (req, res) => {
   try {
@@ -19,15 +20,29 @@ const createUser = async (req, res) => {
 };
 
 // get user by id
+
 const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId).exec();
-    console.log(user);
+    let user = await User.findById(req.params.userId).exec();
+    if (user && user.image) {
+      user = user.toObject();
+      user.image = `http://localhost:8000/uploads/${user.image}`;
+    }
     res.json(user);
   } catch (error) {
     res.status(400).json({ msg: error.message });
   }
 }
+
+// const getUserById = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId).exec();
+//     console.log(user);
+//     res.json(user);
+//   } catch (error) {
+//     res.status(400).json({ msg: error.message });
+//   }
+// }
 
 // get user by email
 const getUserByEmail = async (req, res) => {
@@ -41,19 +56,46 @@ const getUserByEmail = async (req, res) => {
 }
 
 // update user
+// const updateUser = async (req, res) => {
+//   try {
+//     const updateData = {
+//       ...req.body,
+//       image: req.file.filename,
+//     };
+
+//     const user = await User.findByIdAndUpdate(req.params.userId, updateData, {new: true});
+//     console.log(user);
+//     if (!user) {
+//       return res.status(404).json({ msg: "User not found" });
+//     }
+//     res.json(user);
+//   } catch (error) {
+//     console.error(error)
+//     res.status(500).send("Server Error");
+//   }
+// };
+
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.userId, req.body, {new: true});
-    console.log(user);
+    const updateData = {
+      ...req.body,
+      image: req.file.filename,
+    };
+
+    let user = await User.findByIdAndUpdate(req.params.userId, updateData, {new: true});
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
+    }
+    if (user.image) {
+      user = user.toObject();
+      user.image = `http://localhost:8000/uploads/${user.image}`;
     }
     res.json(user);
   } catch (error) {
     console.error(error)
     res.status(500).send("Server Error");
   }
-}
+};
 
 // delete user
 const deleteUser = async (req, res) => {
