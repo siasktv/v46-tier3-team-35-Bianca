@@ -117,6 +117,12 @@ body {
   height: 190px;
   margin-left: 30px;
 }
+.Recent-Transactions-Header {
+  font-weight: bold;
+  font-size: 27px;
+  margin-left: 5px;
+  margin-top: 10px;
+}
 .Recent-logo {
   width: 30px;
   height: auto;
@@ -140,9 +146,16 @@ body {
   margin-left: -130px;
 }
 .Description-Header {
-  margin-left: 8px;
-  font-size: 17px;
-  padding-bottom: 3px;
+  font-weight: bold;
+  font-size: 27px;
+  margin-left: 5px;
+  margin-top: 11px;
+}
+.description {
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  overflow: hidden;
 }
 .News-title {
   font-weight: bold;
@@ -150,12 +163,12 @@ body {
   margin-left: 1px;
   margin-top: 10px;
 }
-.Trending{
+.Trending {
   margin-top: 0px;
 }
 .News-div {
   display: flex;
-  padding-top: 0px;
+  padding-top: 6px;
 }
 .news-name {
   margin-top: 0px;
@@ -163,13 +176,15 @@ body {
 }
 .News-image {
   margin-top: 1px;
+  width: 130px;
+  height: auto;
 }
-.image-not-found{
+.image-not-found {
   margin-top: 1px;
   width: 200px;
 }
-.Trade-div button{
-   border-radius: 10px;
+.Trade-div button {
+  border-radius: 10px;
   margin-left: 70px;
   position: absolute;
   top: 260px;
@@ -177,8 +192,14 @@ body {
   width: 250px;
   background-color: aliceblue;
 }
-/* .news-provider {
-  position: relative;
-  margin-top: -20px;
-  margin-left: 120px;
-} */
+
+.Crypto-info {
+  margin-top: -100px;
+  padding-bottom: 50px;
+}
+.non-Active {
+  display: flex;
+}
+.Active {
+  width: 20px;
+}

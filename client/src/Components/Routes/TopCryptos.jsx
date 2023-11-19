@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-function TopCryptos() {
+import { useNavigate } from "react-router-dom";
+function TopCryptos(props) {
   const [topCryptos, setTopCryptos] = useState([]);
-
+  const setSearch = props.setSearch
+  const navigate = useNavigate()
   useEffect(() => {
     fetch("https://api.coingecko.com/api/v3/search/trending")
       .then((response) => response.json())
@@ -9,8 +11,12 @@ function TopCryptos() {
       .catch((error) => console.error(error));
   }, []);
 
+  function ViewCryptoDetailsHandler(crypto) {
+    navigate('/search');
+      setSearch(crypto.item.name)
+  }
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" style={{marginLeft:-1400}}>
       <table className="table" style={{ width: "1400px" }}>
         <thead>
           <tr>
@@ -50,6 +56,7 @@ function TopCryptos() {
                   <button
                     className="btn btn-ghost btn-xs"
                     style={{ right: -10 }}
+                    onClick={() => ViewCryptoDetailsHandler(crypto)}
                   >
                     details
                   </button>
