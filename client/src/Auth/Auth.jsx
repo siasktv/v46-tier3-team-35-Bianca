@@ -94,23 +94,23 @@ const getAccessToken = () => {
   return accessToken;
 };
 
-// const getProfile = (cb) => {
-//   if (userProfile) return cb(userProfile);
-//   auth0Const.client.userInfo(getAccessToken(), (err, profile) => {
-//     if (profile) userProfile = profile;
-//     cb(profile, err);
-//   });
-// };
-
-const getProfile = () => {
+const getProfile = async() => {
   // Get the user data from the local storage
   const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user._id;
+
 
   // Check if the user data exists
-  if (user) {
-    return user;
+  if (userId) {
+    // Get the user data from the server
+    const response = await axios.get(`http://localhost:8000/users/${userId}`);
+    console.log("respuesta", response.data);
+
+    // Store the returned user in the session
+    localStorage.setItem("user", JSON.stringify(response.data));
+    return response.data;
   } else {
-    console.error('User not found in local storage');
+    console.error('User not found');
   }
 };
 

@@ -44,18 +44,37 @@ function Detail({ auth }) {
   useEffect(() => {
     setUserLoggedIn(auth.isAuthenticated());
   }, [auth]);
+  // useEffect(() => {
+  //   loadUserProfile();
+  // }, [userLoggedIn]);
+  // const loadUserProfile = async() => {
+  //   userLoggedIn
+  //     ? await auth.getProfile((profile, error) => setProfile({ profile, error }))
+  //     : "";
+  // };
+  
   useEffect(() => {
-    loadUserProfile();
-  }, [userLoggedIn]);
-  const loadUserProfile = () => {
-    userLoggedIn
-      ? auth.getProfile((profile, error) => setProfile({ profile, error }))
-      : "";
-  };
+    const loadProfile = async () => {
+      try {
+        const profile = await auth.getProfile();
+        setProfile(profile);
+        setProfileEmail(profile?.email || "");
+      } catch (error) {
+        console.error("Error loading profile:", error);
+      }
+    };
+  
+    loadProfile();
+  }, [profileEmail, auth]);
 
-  useEffect(() => {
-    setProfileEmail(profile.profile ? profile.profile.email : "");
-  }, [profile]);
+
+
+  // useEffect(() => {
+  //   setProfileEmail(profile ? profile.email : "");
+  // }, [profile]);
+
+  console.log("perfil",profile)
+  console.log("email",profileEmail)
 
   const { id } = useParams();
   const [coin, setCoin] = useState(null);

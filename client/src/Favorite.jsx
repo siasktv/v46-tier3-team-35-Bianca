@@ -11,19 +11,31 @@ function Favorite({ auth }) {
   useEffect(() => {
     setUserLoggedIn(auth.isAuthenticated());
   }, [auth]);
-  useEffect(() => {
-    loadUserProfile();
-  }, [userLoggedIn]);
+  // useEffect(() => {
+  //   loadUserProfile();
+  // }, [userLoggedIn]);
 
-  const loadUserProfile = () => {
-    userLoggedIn
-      ? auth.getProfile((profile, error) => setProfile({ profile, error }))
-      : "";
-  };
+  // const loadUserProfile = () => {
+  //   userLoggedIn
+  //     ? auth.getProfile((profile, error) => setProfile({ profile, error }))
+  //     : "";
+  // };
 
   useEffect(() => {
-    setProfileEmail(profile ? profile.profile.email : "");
-  }, [profile]);
+    const loadProfile = async () => {
+      try {
+        const profile = await auth.getProfile();
+        setProfile(profile);
+        setProfileEmail(profile?.email || "");
+      } catch (error) {
+        console.error("Error loading profile:", error);
+      }
+    };
+  
+    loadProfile();
+  }, [profileEmail, auth]);
+
+
 
   useEffect(() => {
     async function fetchLikedCoins() {
