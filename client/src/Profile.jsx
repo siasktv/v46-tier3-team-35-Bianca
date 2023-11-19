@@ -8,16 +8,6 @@ export const Profile = ({ auth }) => {
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
 
-  const loadUserProfile = () => {
-    auth.getProfile((profile, error) => {
-      if (error) {
-        console.error("Error loading profile:", error);
-        setError(error);
-      } else {
-        setProfile({ profile, error });
-      }
-    });
-  };
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -46,10 +36,10 @@ export const Profile = ({ auth }) => {
     setEmail(event.target.value);
   };
 
-  const handleImageChange = (event) => {
-    console.log(event.target.files[0])
-    setImage(event.target.files[0]);
-  };
+  // const handleImageChange = (event) => {
+  //   console.log(event.target.files[0])
+  //   setImage(event.target.files[0]);
+  // };
 
   const updateUser = async () => {
     try {
@@ -118,20 +108,20 @@ export const Profile = ({ auth }) => {
               </div>
             </div>
           </div>
-          <div className="border border-[#EAEAEA] mt-6 mb-6"></div>
+          {/* <div className="border border-[#EAEAEA] mt-6 mb-6"></div>
           <h2 className="font-bold">Profile Picture</h2>
           <div className="flex mt-6 justify-between">
             <img
               className="rounded-full w-18 h-18"
               src={profile.image || "https://i.pravatar.cc/300"}
             />
-            {/* <div>
+            <div>
               <input type="file" onChange={handleImageChange}/>
               <button className="border-[#EAEAEA] border text-[#808080] hover:transform hover:scale-105 transition-all duration-200 rounded-lg py-2 px-6">
                 Upload photo
               </button>
-            </div> */}
-          </div>
+            </div>
+          </div> */}
           <div className="flex mt-6 flex-col gap-2">
             <h2 className="font-bold">Full name</h2>
             <input
