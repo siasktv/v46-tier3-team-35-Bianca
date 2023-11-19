@@ -27,7 +27,7 @@ app.use("/users", require("./routes/userRoutes.js"));
 app.use("/crypto", require("./routes/cryptoRoutes"));
 app.use("/favorite", require("./routes/likeRoutes.js"));
 
-app.listen(PORT, () => {
-  console.log(`Server is running at port ${PORT}...`);
+app.listen(process.env.PORT || 8000, '0.0.0.0', () => {
+  console.log(`Server is running at port ${process.env.PORT || 8000}...`);
   connectToDB();
 });
