@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export const Callback = (props) => {
   useEffect(() => {
-    if (/access_token|id_token|error/.test(props.location.hash)) {
+    if (/access_token|id_token|error/.test(props.loc.hash)) {
       props.auth.handleAuthentication();
     }
   }, []);
