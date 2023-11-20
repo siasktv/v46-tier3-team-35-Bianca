@@ -25,7 +25,7 @@ function NavBar({ auth, setSearch }) {
 
   return (
     <div className="navbar bg-base-100">
-      <div className="navbar-start">
+      {/* <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <svg
@@ -43,7 +43,7 @@ function NavBar({ auth, setSearch }) {
               />
             </svg>
           </label>
-          {/* <ul
+          <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
@@ -80,9 +80,9 @@ function NavBar({ auth, setSearch }) {
             ) : (
               <button onClick={auth.login}>Log In</button>
             )}
-          </ul> */}
+          </ul>
         </div>
-      </div>
+      </div> */}
       <div className="navbar-center">
         <a className="btn btn-ghost normal-case text-xl">Crypto App</a>
       </div>
@@ -123,14 +123,14 @@ function NavBar({ auth, setSearch }) {
             <BiSolidDashboard />
           </NavLink>
         </button>
-        <button className="btn btn-ghost btn-circle">
+        {/* <button className="btn btn-ghost btn-circle">
           <NavLink
             to="/favorite"
             className={({ isActive }) => (isActive ? "Active2" : "non-Active2")}
           >
             <AiOutlineHeart />
           </NavLink>
-        </button>
+        </button> */}
       </div>
     </div>
   );
