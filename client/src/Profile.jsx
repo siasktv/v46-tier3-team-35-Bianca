@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 export const Profile = ({ auth }) => {
   const [profile, setProfile] = useState(null);
   const [fullName, setFullName] = useState("");
@@ -50,7 +52,7 @@ export const Profile = ({ auth }) => {
         formData.append('image', image);
       }
   
-      const response = await axios.put(`http://localhost:8000/users/${profile?._id}/edit`, formData, {
+      const response = await axios.put(`${BACKEND_URL}/users/${profile?._id}/edit`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -68,7 +70,7 @@ export const Profile = ({ auth }) => {
 
   const deleteUser = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8000/users/${profile?._id}/delete`);
+      const response = await axios.delete(`${BACKEND_URL}/users/${profile?._id}/delete`);
       if (response.status === 200) {
         auth.logout();
       } else {

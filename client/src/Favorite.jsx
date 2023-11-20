@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 function Favorite({ auth }) {
   const [likedCoins, setLikedCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +43,7 @@ function Favorite({ auth }) {
     async function fetchLikedCoins() {
       try {
         const response = await axios.get(
-          `http://localhost:8000/favorite/list/${profileEmail}`
+          `${BACKEND_URL}/favorite/list/${profileEmail}`
         );
         setLikedCoins(response.data);
       } catch (err) {
@@ -56,7 +58,7 @@ function Favorite({ auth }) {
 
   const handleDislike = async (coinName) => {
     try {
-      await axios.delete("http://localhost:8000/favorite/dislike", {
+      await axios.delete(`${BACKEND_URL}/favorite/dislike`, {
         data: {
           name: coinName,
           userEmail: profileEmail,

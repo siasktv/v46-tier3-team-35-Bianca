@@ -1,6 +1,9 @@
 import auth0 from "auth0-js";
 import axios from "axios";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;
+
 const auth0Const = new auth0.WebAuth({
   domain: import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN,
   clientID: import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID,
@@ -34,7 +37,7 @@ const setSession = async (authResult) => {
 
   //call the endpoint to create the user on mongodb
   try{
-    const response = await axios.post("http://localhost:8000/users/create", {
+    const response = await axios.post(`${BACKEND_URL}/users/create`, {
       email: authResult.idTokenPayload.email,
       fullName: authResult.idTokenPayload.name,
       image: authResult.idTokenPayload.picture,
@@ -47,7 +50,7 @@ const setSession = async (authResult) => {
     console.log(error);
     if (error.response && error.response.status === 400) {
       // If the user is already created, get the user data from the server
-      const response = await axios.get(`http://localhost:8000/users/email/${authResult.idTokenPayload.email}`);
+      const response = await axios.get(`${BACKEND_URL}/users/email/${authResult.idTokenPayload.email}`);
       console.log("respuesta", response.data);
   
       // Store the returned user in the session
@@ -60,7 +63,7 @@ const handleAuthentication = () => {
   auth0Const.parseHash(async (err, authResult) => {
     if (authResult && authResult.accessToken && authResult.idToken) {
       await setSession(authResult);
-      window.location.assign("http://127.0.0.1:5173/");
+      window.location.assign(`${FRONTEND_URL}/`);
     } else if (err) {
       alert(`Error: ${err.error}. Check the console for further details.`);
       console.log(err);
@@ -80,7 +83,7 @@ const logout = () => {
   userProfile = null;
   auth0Const.logout({
     clientID: import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID,
-    returnTo: "http://127.0.0.1:5173/",
+    returnTo: `${FRONTEND_URL}/`,
   });
 };
 
@@ -103,7 +106,7 @@ const getProfile = async() => {
   // Check if the user data exists
   if (userId) {
     // Get the user data from the server
-    const response = await axios.get(`http://localhost:8000/users/${userId}`);
+    const response = await axios.get(`${BACKEND_URL}/users/${userId}`);
     console.log("respuesta", response.data);
 
     // Store the returned user in the session
