@@ -37,6 +37,8 @@ ChartJS.register(
 
 const ranges = ["1d", "7d", "30d", "90d", "180d", "365d", "max"];
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 function Detail({ auth }) {
   const [profile, setProfile] = useState("");
   const [profileEmail, setProfileEmail] = useState("");
@@ -103,7 +105,7 @@ function Detail({ auth }) {
         // Check if the coin is liked
 
         const response = await axios.get(
-          `http://localhost:8000/favorite/check?name=${id}&userEmail=${profileEmail}`
+          `${BACKEND_URL}/favorite/check?name=${id}&userEmail=${profileEmail}`
         );
         if (response.data.liked) {
           setLiked(true);
@@ -146,7 +148,7 @@ function Detail({ auth }) {
 
   const handleLike = async () => {
     try {
-      await axios.post("http://localhost:8000/favorite/like", {
+      await axios.post(`${BACKEND_URL}/favorite/like`, {
         name: id,
         image: coinInfo.image.large,
         userEmail: profileEmail,
@@ -159,7 +161,7 @@ function Detail({ auth }) {
 
   const handleDislike = async () => {
     try {
-      await axios.delete("http://localhost:8000/favorite/dislike", {
+      await axios.delete(`${BACKEND_URL}/favorite/dislike`, {
         data: {
           name: id,
           userEmail: profileEmail,
