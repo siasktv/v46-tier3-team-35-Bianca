@@ -33,7 +33,7 @@ function App() {
         <div className="body">
           <Routes>
             <Route path="/" element={<Home auth={authConst} />} />
-            <Route
+            {/* <Route
               path="/callback"
               element={<Callback auth={authConst} loc={location} />}
             />
@@ -46,10 +46,10 @@ function App() {
                   <Navigate to="/" />
                 )
               }
-            />
+            /> */}
             <Route path="/prices" element={<Prices />} />
             <Route path="/coin/:id" element={<Detail auth={authConst} />} />
-            <Route path="/favorite" element={<Favorite auth={authConst} />} />
+            {/* <Route path="/favorite" element={<Favorite auth={authConst} />} /> */}
           </Routes>
         </div>
         <div style={{ display: "flex" }}>
