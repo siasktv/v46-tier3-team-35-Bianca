@@ -2,12 +2,12 @@ import auth0 from "auth0-js";
 import axios from "axios";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;
+const FRONTEND_URL = import.meta.env.VITE_REACT_APP_FRONTEND_URL;
 
 const auth0Const = new auth0.WebAuth({
   domain: import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN,
   clientID: import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID,
-  redirectUri: import.meta.env.VITE_REACT_APP_AUTH0_CALLBACK_URL,
+  redirectUri: `${FRONTEND_URL}/callback`,
   responseType: "token id_token",
   scope: "openid profile email",
 });
