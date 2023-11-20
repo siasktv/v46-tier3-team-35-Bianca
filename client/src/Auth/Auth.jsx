@@ -7,7 +7,7 @@ const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;
 const auth0Const = new auth0.WebAuth({
   domain: import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN,
   clientID: import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID,
-  redirectUri: `${FRONTEND_URL}/callback`,
+  redirectUri: import.meta.env.VITE_REACT_APP_AUTH0_CALLBACK_URL,
   responseType: "token id_token",
   scope: "openid profile email",
 });
